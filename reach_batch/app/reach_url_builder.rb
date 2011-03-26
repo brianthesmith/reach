@@ -11,11 +11,11 @@ class ReachURLBuilder
     end
    
     def game_history_endpoint(player, page)
-      @base_url << "/player/gamehistory/" << api_key << "/" << player << "/6/" << page
+     "#{@base_url}/player/gamehistory/#{api_key}/#{player}/6/#{page}"
     end
 
     def game_details_endpoint(gameId)
-      @base_url << "/game/details/" << api_key  << "/" << gameId
+      "#{@base_url}/game/details/#{api_key}/#{gameId}"
     end
   
     def api_key
