@@ -1,20 +1,13 @@
 require 'rubygems'
-require 'net/http'
-require 'json'
-require 'app/reach_url_builder'
+require 'halo-reach-api'
 
 class ReachClient
+   def initialize
+      api_key = File.new("resources/api_key.txt").read.chomp
+      @reach = Halo::Reach::API.new(api_key)
+   end
 
-  def initialize
-    @urlBuilder = ReachURLBuilder.new("resources/api_key.txt")
-  end
-
-	def get_player_game_history(player)
-      JSON.parse(Net::HTTP.get_response(URI.parse(@urlBuilder.game_history_endpoint(player,"0"))).body)
-  end
-
-  def get_game_details(gameId)
-      JSON.parse(Net::HTTP.get_response(URI.parse(@urlBuilder.game_details_endpoint(gameId))).body)
-  end
-  
+   def pull_data
+      @reach.woot
+   end
 end
