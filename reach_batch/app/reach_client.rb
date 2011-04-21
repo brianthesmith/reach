@@ -1,6 +1,6 @@
-require 'rubygems'
-require 'json'
-require 'halo-reach-api'
+require "rubygems"
+require "json"
+require "halo-reach-api"
 
 class ReachClient
    ACCOUNT_1 ="Buckethead Died"
@@ -12,16 +12,35 @@ class ReachClient
    end
 
    def game_history
-      game_history_json = @reach.get_game_history(ACCOUNT_1, 6, 0)
+      game_history_json1 = @reach.get_game_history(ACCOUNT_1, 6, 0)
+      game_history_json2 = @reach.get_game_history(ACCOUNT_2, 6, 0)
 
       games = []
-      game_history_json['RecentGames'].each do |game_json|
+      game_history_json1["RecentGames"].each do |game_json|
          game = Game.new
-         game.id = game_json['GameId']
+         game.id = game_json["GameId"]
          games << game
       end
 
+      game_history_json2["RecentGames"].each do |game_json|
+         game = Game.new
+         game.id = game_json["GameId"]
+         if !contains_game(games, game)
+            games << game
+         end
+      end
+
       return games
+   end
+
+   def contains_game(games, target_game)
+      games.each do |game|
+         if game.id == target_game.id
+            return true
+         end
+      end
+
+      return false
    end
 
    class Game
