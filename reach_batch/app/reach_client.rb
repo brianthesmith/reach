@@ -12,35 +12,17 @@ class ReachClient
    end
 
    def game_history
-      game_history_json1 = @reach.get_game_history(ACCOUNT_1, 6, 0)
-      game_history_json2 = @reach.get_game_history(ACCOUNT_2, 6, 0)
+      game_history_json1 = @reach.get_game_history(ACCOUNT_1, 6, 0)["RecentGames"]
+      game_history_json2 = @reach.get_game_history(ACCOUNT_2, 6, 0)["RecentGames"]
 
       games = []
-      game_history_json1["RecentGames"].each do |game_json|
+      (game_history_json1 | game_history_json2).each do |game_json|
          game = Game.new
          game.id = game_json["GameId"]
          games << game
       end
 
-      game_history_json2["RecentGames"].each do |game_json|
-         game = Game.new
-         game.id = game_json["GameId"]
-         if !contains_game(games, game)
-            games << game
-         end
-      end
-
       return games
-   end
-
-   def contains_game(games, target_game)
-      games.each do |game|
-         if game.id == target_game.id
-            return true
-         end
-      end
-
-      return false
    end
 
    class Game
