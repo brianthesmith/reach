@@ -11,7 +11,7 @@ class ReachClient
       @reach = reach
    end
 
-   def game_history
+   def most_recent_games
       game_history_json1 = @reach.get_game_history(ACCOUNT_1, 6, 0)["RecentGames"]
       game_history_json2 = @reach.get_game_history(ACCOUNT_2, 6, 0)["RecentGames"]
 

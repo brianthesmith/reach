@@ -4,20 +4,6 @@ require "json"
 require "mocha"
 
 class ReachClientTest < Test::Unit::TestCase
-   class ReachStub
-      attr_accessor :account
-      attr_accessor :type
-      attr_accessor :page
-      attr_accessor :return_content
-
-      def get_game_history(account, type, page)
-         @account = account
-         @type = type
-         @page = page
-         @return_content
-      end
-   end
-
    def setup
       @reach_mock = Halo::Reach::API.new(nil)
 
@@ -30,7 +16,7 @@ class ReachClientTest < Test::Unit::TestCase
       response2 = JSON.parse '{"RecentGames": [{"GameId": 123}, {"GameId": 789}]}'
       @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, 6, 0).returns(response2)
 
-      games = @test_object.game_history
+      games = @test_object.most_recent_games
 
       assert_equal 3, games.size      
       assert_equal 123, games[0].id
