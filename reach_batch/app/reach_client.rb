@@ -1,13 +1,30 @@
 require 'rubygems'
+require 'json'
 require 'halo-reach-api'
 
 class ReachClient
-   def initialize
-      api_key = File.new("resources/api_key.txt").read.chomp
-      @reach = Halo::Reach::API.new(api_key)
+   ACCOUNT_1 ="Buckethead Died"
+   ACCOUNT_2 = "jaymz9mm"
+   CUSTOM_GAME = 6
+
+   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new))
+      @reach = reach
    end
 
-   def pull_data
-      @reach.woot
+   def game_history
+      game_history_json = @reach.get_game_history(ACCOUNT_1, 6, 0)
+
+      games = []
+      game_history_json['RecentGames'].each do |game_json|
+         game = Game.new
+         game.id = game_json['GameId']
+         games << game
+      end
+
+      return games
+   end
+
+   class Game
+      attr_accessor :id
    end
 end
