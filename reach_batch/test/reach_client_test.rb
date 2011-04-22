@@ -1,26 +1,55 @@
 require "test/unit"
-require "app/reach_client"
 require "json"
 require "mocha"
 
+require "reach_client"
+
 class ReachClientTest < Test::Unit::TestCase
    def setup
-      @reach_mock = Halo::Reach::API.new(nil)
+      @reach_mock = mock()
 
       @test_object = ReachClient.new(@reach_mock)
    end
 
-   def test_game_ids_are_populated_in_returned_recent_games
+   def test_game_ids_are_populated_in_returned_most_recent_games
       response1 = JSON.parse '{"RecentGames": [{"GameId": 123}, {"GameId": 456}]}'
-      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_1, 6, 0).returns(response1)
+      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_1, ReachClient::CUSTOM_GAME, 0).returns(response1)
       response2 = JSON.parse '{"RecentGames": [{"GameId": 123}, {"GameId": 789}]}'
-      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, 6, 0).returns(response2)
+      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, 0).returns(response2)
 
       games = @test_object.most_recent_games
 
-      assert_equal 3, games.size      
+      assert_equal 3, games.size
       assert_equal 123, games[0].id
       assert_equal 456, games[1].id
       assert_equal 789, games[2].id
+   end
+
+   def test_all_historic_games_returns_games_with_ids
+      generic_response = JSON.parse '{"RecentGames": [{"GameId": 1}]}'
+      @reach_mock.expects(:get_game_history).with(any_parameters).at_least(1).returns(generic_response)
+
+      response1 = JSON.parse '{"RecentGames": [{"GameId": 2}]}'
+      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_1, ReachClient::CUSTOM_GAME, 0).returns(response1)
+      response2 = JSON.parse '{"RecentGames": [{"GameId": 3}]}'
+      @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, 24).returns(response2)
+
+      games = @test_object.all_historic_games
+
+      assert_equal 3, games.size
+      assert_equal 1, games[0].id
+      assert_equal 2, games[1].id
+      assert_equal 3, games[2].id
+   end
+
+   def test_all_historic_games_pulls_in_all_25_pages
+      response = JSON.parse '{"RecentGames": [{"GameId": 1}]}'
+
+      (0..24).each do |page_number|
+         @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_1, ReachClient::CUSTOM_GAME, page_number).returns(response)
+         @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, page_number).returns(response)
+      end
+
+      @test_object.all_historic_games
    end
 end

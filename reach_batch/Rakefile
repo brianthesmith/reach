@@ -6,7 +6,17 @@ task :default => :test
 
 desc 'Run unit tests'
 Rake::TestTask.new(:test) do |t|
-   t.libs << 'app'
+   t.libs << 'app' << 'test'
    t.pattern = 'test/**/*_test.rb'
    t.verbose = true
+end
+
+desc "Run batch job"
+task :run_batch_job do
+   sh "ruby -Iapp app/batch_job.rb"
+end
+
+desc "Run update job"
+task :run_update_job do
+   sh "ruby -Iapp app/update_job.rb"
 end
