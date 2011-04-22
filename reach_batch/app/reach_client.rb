@@ -7,7 +7,7 @@ class ReachClient
    ACCOUNT_2 = "jaymz9mm"
    CUSTOM_GAME = 6
 
-   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new))
+   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new.api_key))
       @reach = reach
    end
 
