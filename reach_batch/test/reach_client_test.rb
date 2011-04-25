@@ -9,6 +9,9 @@ class ReachClientTest < Test::Unit::TestCase
       @reach_mock = mock()
 
       @test_object = ReachClient.new(@reach_mock)
+
+      game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
+      @reach_mock.expects(:get_game_details).with(any_parameters).at_least(1).returns(game_details)
    end
 
    def test_game_ids_are_populated_in_returned_most_recent_games
