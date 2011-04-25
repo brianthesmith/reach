@@ -70,6 +70,7 @@ class ReachClient
          player.other_medals = json_player["OtherMedalCount"]
          player.service_tag = json_player["PlayerDetail"]["service_tag"]
          player.emblem = json_player["PlayerDetail"]["ReachEmblem"]
+         player.team_id = json_player["Team"]
          player.total_medals = json_player["TotalMedalCount"]
          player.weapon_carnage = parse_weapon_carnage(json_player["WeaponCarnageReport"])
       end
@@ -99,6 +100,7 @@ class ReachClient
          team = Team.new
          teams << team
 
+         team.id = json_team["Index"]
          team.standing = json_team["Standing"]
          team.score = json_team["Score"]
          team.kills = json_team["TeamTotalKills"]
@@ -170,6 +172,7 @@ class ReachClient
       attr_accessor :emblem
       attr_accessor :total_medals
       attr_accessor :weapon_carnage
+      attr_accessor :team_id
    end
 
    class WeaponCarnageReport
@@ -181,6 +184,7 @@ class ReachClient
    end
 
    class Team
+      attr_accessor :id
       attr_accessor :standing
       attr_accessor :score
       attr_accessor :kills
