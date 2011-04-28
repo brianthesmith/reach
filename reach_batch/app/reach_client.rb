@@ -1,6 +1,7 @@
 require "rubygems"
 require "json"
 require "halo-reach-api"
+require "active_record"
 
 class ReachClient
    ACCOUNT_1 ="Buckethead Died"
@@ -13,7 +14,7 @@ class ReachClient
 
    def most_recent_games
       json_games = games_on_page(0)
-      parse_game_data(json_games)
+      games = parse_game_data(json_games)
    end
 
    def all_historic_games
@@ -183,7 +184,7 @@ class ReachClient
       attr_accessor :penalties
    end
 
-   class Team
+   class Team 
       attr_accessor :id
       attr_accessor :standing
       attr_accessor :score
