@@ -1,4 +1,4 @@
-require 'weapon'
+require "./app/weapon"
 
 class MetaDataParser
    def initialize(meta_data_file_location = "resources/game_meta_data.txt")
