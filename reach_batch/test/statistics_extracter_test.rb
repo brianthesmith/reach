@@ -71,8 +71,8 @@ class StatisticsExtracterTest < Test::Unit::TestCase
       assert_equal(3, player1_stats.assists)
       assert_equal(4, player1_stats.total_medals)
       assert(player1_stats.on_winning_team)
-      assert_equal(1, player1_stats.weapon_of_choice.to_i)
-      assert_equal(1, player1_stats.weapon_most_killed_by.to_i)
+      assert_equal(1, player1_stats.weapon_of_choice)
+      assert_equal(1, player1_stats.weapon_most_killed_by)
       assert_equal(6, player1_stats.total_head_shots)
 
       player2_stats = player_stats[1]
@@ -86,8 +86,8 @@ class StatisticsExtracterTest < Test::Unit::TestCase
       assert_equal(0, player2_stats.assists)
       assert_equal(2, player2_stats.total_medals)
       assert(!player2_stats.on_winning_team)
-      assert_equal(1, player2_stats.weapon_of_choice.to_i)
-      assert_equal(1, player2_stats.weapon_most_killed_by.to_i)
+      assert_equal(1, player2_stats.weapon_of_choice)
+      assert_equal(1, player2_stats.weapon_most_killed_by)
       assert_equal(2, player2_stats.total_head_shots)
    end
 end

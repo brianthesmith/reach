@@ -17,14 +17,14 @@ class CreateInitialTables < ActiveRecord::Migration
          table.column :service_tag, :string
          table.column :game_type, :string
          table.column :game_time, :datetime
-         table.column :kills, :number
-         table.column :deaths, :number
-         table.column :assists, :number
-         table.column :total_medals, :number
-         table.column :weapon_of_choice, :number
-         table.column :weapon_most_killed_by, :number
+         table.column :kills, :integer
+         table.column :deaths, :integer
+         table.column :assists, :integer
+         table.column :total_medals, :integer
+         table.column :weapon_of_choice, :integer
+         table.column :weapon_most_killed_by, :integer
          table.column :on_winning_team, :boolean
-         table.column :total_head_shots, :number
+         table.column :total_head_shots, :integer
       end
    end
 
