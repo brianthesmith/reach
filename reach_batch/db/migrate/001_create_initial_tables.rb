@@ -7,6 +7,11 @@ class CreateInitialTables < ActiveRecord::Migration
          table.column :description, :string
       end
 
+      create_table :players do |table|
+         table.column :real_name, :string
+         table.column :service_tag, :string
+      end
+
       create_table :player_statistics do |table|
          table.column :reach_game_id, :string
          table.column :service_tag, :string
@@ -25,6 +30,7 @@ class CreateInitialTables < ActiveRecord::Migration
 
    def self.down
       drop_table :weapons
+      drop_table :players
       drop_table :player_statistics
    end
 end

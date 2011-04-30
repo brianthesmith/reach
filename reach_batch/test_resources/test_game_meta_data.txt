@@ -1,0 +1,62 @@
+{
+   "reason":"Okay",
+   "status":0,
+   "Data":{
+      "AllWeaponsById":[
+         {
+            "Key":0,
+            "Value":{
+               "Description":"This is the first weapon",
+               "Id":0,
+               "Name":"Weapon one"
+            }
+         },
+         {
+            "Key":1,
+            "Value":{
+               "Description":"This is the second weapon",
+               "Id":1,
+               "Name":"Weapon two"
+            }
+         },
+         {
+            "Key":2,
+            "Value":{
+               "Description":"This is the third weapon",
+               "Id":2,
+               "Name":"Weapon three"
+            }
+         }
+      ],
+      "GameVariantClassesKeysAndValues":[
+         {
+            "Key":"Unknown",
+            "Value":0
+         },
+         {
+            "Key":"Invasion",
+            "Value":1
+         },
+         {
+            "Key":"Arena",
+            "Value":2
+         },
+         {
+            "Key":"Competitive",
+            "Value":3
+         },
+         {
+            "Key":"Campaign",
+            "Value":4
+         },
+         {
+            "Key":"Firefight",
+            "Value":5
+         },
+         {
+            "Key":"Custom",
+            "Value":6
+         }
+      ]
+   }
+}

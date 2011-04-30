@@ -1,31 +1,27 @@
 require "rake"
 require "rake/testtask"
-require "./app/initialize_db"
+require "active_record"
+require "yaml"
 
 desc "Default: run unit tests"
 task :default => :test
-task :test => :initialize_test_db
+
+def environment(env)
+   ActiveRecord::Base.establish_connection(YAML::load(File.open("config/#{env}.yml")))   
+   ActiveRecord::Migrator.migrate("db/migrate")
+end
 
 desc "Run unit tests"
 Rake::TestTask.new(:test) do |t|
+   environment(:test)
    t.libs << "app" << "test"
    t.pattern = "test/**/*_test.rb"
    t.verbose = true
 end
 
-desc "Initialize Test Database"
-task :initialize_test_db do
-   initialize_database("config/test.yml")
-end
-
-desc "Initialize Test Database"
-task :initialize_prod_db do
-   initialize_database("config/prod.yml")
-end
-
-
 desc "Run batch job"
-task :run_batch_job => :initialize_prod_db do
+task :run_batch_job do
+   environemnt(:prod)
    sh "ruby -Iapp app/batch_job.rb"
 end
 

@@ -5,7 +5,7 @@ require "statistics_extracter"
 
 class StatisticsExtracterTest < Test::Unit::TestCase
    def setup
-      known_service_tags = ["tag_1", "tag_2", "tag_3"]
+      known_service_tags = ["tag_1", "tag_2"]
 
       @test_object = StatisticsExtracter.new(known_service_tags)
 
@@ -36,7 +36,11 @@ class StatisticsExtracterTest < Test::Unit::TestCase
       mock_player2 = mock()
       mock_player2.stubs(:service_tag => "tag_2", :kills => 5, :deaths => 10, :assists => 0, :total_medals => 2, :team_id => 1, :weapon_carnage => weapon_carnage2)
 
-      players = [mock_player1, mock_player2]
+      mock_player3 = mock()
+      mock_player3.stubs(:service_tag => "tag_3", :kills => 5, :deaths => 10, :assists => 0, :total_medals => 2, :team_id => 1, :weapon_carnage => weapon_carnage2)
+
+
+      players = [mock_player1, mock_player2, mock_player3]
 
       team1 = mock()
       team1.stubs(:standing => 0)
@@ -67,8 +71,8 @@ class StatisticsExtracterTest < Test::Unit::TestCase
       assert_equal(3, player1_stats.assists)
       assert_equal(4, player1_stats.total_medals)
       assert(player1_stats.on_winning_team)
-#      assert_equal(1, player1_stats.weapon_of_choice)
-#      assert_equal(1, player1_stats.weapon_most_killed_by)
+      assert_equal(1, player1_stats.weapon_of_choice.to_i)
+      assert_equal(1, player1_stats.weapon_most_killed_by.to_i)
       assert_equal(6, player1_stats.total_head_shots)
 
       player2_stats = player_stats[1]
@@ -82,8 +86,8 @@ class StatisticsExtracterTest < Test::Unit::TestCase
       assert_equal(0, player2_stats.assists)
       assert_equal(2, player2_stats.total_medals)
       assert(!player2_stats.on_winning_team)
-#      assert_equal(1, player2_stats.weapon_of_choice)
-#      assert_equal(1, player2_stats.weapon_most_killed_by)
+      assert_equal(1, player2_stats.weapon_of_choice.to_i)
+      assert_equal(1, player2_stats.weapon_most_killed_by.to_i)
       assert_equal(2, player2_stats.total_head_shots)
    end
 end
