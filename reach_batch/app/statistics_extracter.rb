@@ -29,7 +29,7 @@ class StatisticsExtracter
 
             player_stat.weapon_of_choice = weapon_carnage_reports.first.weapon_id
             weapon_carnage_reports.sort! do |x, y|
-               (x.deaths <=> y.deaths)*-1
+               (x.deaths <=> y.deaths)*-1:
             end
             player_stat.weapon_most_killed_by = weapon_carnage_reports.first.weapon_id
             total_head_shots = 0            
