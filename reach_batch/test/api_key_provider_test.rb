@@ -1,7 +1,7 @@
 require 'test/unit'
-require 'app/api_key_provider'
+require 'api_key_provider'
 
-class ApiKeyProviderTest <  Test::Unit::TestCase
+class ApiKeyProviderTest < Test::Unit::TestCase
    def setup
       @test_object = ApiKeyProvider.new('test_resources/test_api_key.txt')
    end

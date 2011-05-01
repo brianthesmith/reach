@@ -1,0 +1,4 @@
+adapter: mysql
+database: reach
+user: root
+password: root
