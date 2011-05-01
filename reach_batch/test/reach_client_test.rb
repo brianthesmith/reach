@@ -2,6 +2,8 @@ require "test/unit"
 require "json"
 require "mocha"
 
+require "random_game_id"
+
 require "reach_client"
 
 class ReachClientTest < Test::Unit::TestCase
@@ -64,10 +66,5 @@ class ReachClientTest < Test::Unit::TestCase
       games[0].id = game_id
 
       @test_object.populate_details(games)
-   end
-
-   def random_game_id
-      o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
-      string  =  (0..50).map{ o[rand(o.length)]  }.join;
    end
 end
