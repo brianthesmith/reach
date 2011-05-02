@@ -11,11 +11,11 @@ puts "Populating meta-data..."
 
 meta_data_parser = MetaDataParser.new
 
-if Weapons.all.length != 0
+if Weapon.all.length != 0
    meta_data_parser.all_weapons
 end
 
-if Players.all.length != 0
+if Player.all.length != 0
    meta_data_parser.all_players
 end
 
