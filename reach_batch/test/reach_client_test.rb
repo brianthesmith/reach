@@ -2,7 +2,7 @@ require "test/unit"
 require "json"
 require "mocha"
 
-require "random_game_id"
+require "random_string"
 
 require "reach_client"
 
@@ -58,7 +58,7 @@ class ReachClientTest < Test::Unit::TestCase
    def test_game_details
       game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
 
-      game_id = random_game_id
+      game_id = random_string
 
       @reach_mock.expects(:get_game_details).with(game_id).returns(game_details)
 

@@ -1,6 +1,6 @@
 require "test/unit"
 
-require "random_game_id"
+require "random_string"
 require "player"
 require "service_tag_provider"
 
@@ -12,9 +12,9 @@ class ServiceTagProviderTest < Test::Unit::TestCase
    end
 
    def test_all_service_tags
-      service_tag1 = random_game_id
-      service_tag2 = random_game_id
-      service_tag3 = random_game_id
+      service_tag1 = random_string
+      service_tag2 = random_string
+      service_tag3 = random_string
 
       player1 = Player.new
       player1.service_tag = service_tag1
