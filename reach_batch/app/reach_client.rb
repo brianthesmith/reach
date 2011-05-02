@@ -3,18 +3,24 @@ require "json"
 require "halo-reach-api"
 require "active_record"
 
+require "reach_game"
+require "reach_player"
+require "reach_team"
+require "reach_weapon_carnage_report"
+
 class ReachClient
    ACCOUNT_1 ="Buckethead Died"
    ACCOUNT_2 = "jaymz9mm"
    CUSTOM_GAME = 6
 
-   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new.api_key))
+   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new.api_key), throttle = 1)
       @reach = reach
+      @throttle = throttle
    end
 
    def most_recent_games
       json_games = games_on_page(0)
-      games = parse_game_data(json_games)
+      populate_game_ids(json_games)
    end
 
    def all_historic_games
@@ -23,19 +29,14 @@ class ReachClient
          json_games = json_games | games_on_page(page)
       end
 
-      parse_game_data(json_games)
-   end
-
-   private
-   def parse_game_data(json_games)
-      games = populate_game_ids(json_games)
-      populate_details(games)
-      sort_by_id(games)
+      populate_game_ids(json_games)
    end
 
    def populate_details(games)
       games.each do |game|
-         game_details_json = @reach.get_game_details(ACCOUNT_1, CUSTOM_GAME, game.id)["GameDetails"]
+         sleep(@throttle)
+
+         game_details_json = @reach.get_game_details(game.id)["GameDetails"]
 
          game.base_map = game_details_json["BaseMapName"]
          game.duration = game_details_json["GameDuration"]
@@ -48,13 +49,16 @@ class ReachClient
             game.teams = parse_teams(game_details_json["Teams"])
          end
       end
+
+      games
    end
 
+   private
    def parse_players(json_players)
       players = []
 
       json_players.each do |json_player|
-         player = Player.new
+         player = ReachPlayer.new
          players << player
 
          player.assists = json_player["Assists"]
@@ -82,7 +86,7 @@ class ReachClient
    def parse_weapon_carnage(weapon_carnage_jsons)
       weapon_carnages = []
       weapon_carnage_jsons.each do |weapon_carnage_json|
-         weapon_carnage = WeaponCarnageReport.new
+         weapon_carnage = ReachWeaponCarnageReport.new
          weapon_carnages << weapon_carnage
 
          weapon_carnage.weapon_id = weapon_carnage_json["WeaponId"]
@@ -98,7 +102,7 @@ class ReachClient
    def parse_teams(json_teams)
       teams = []
       json_teams.each do |json_team|
-         team = Team.new
+         team = ReachTeam.new
          teams << team
 
          team.id = json_team["Index"]
@@ -114,19 +118,18 @@ class ReachClient
       teams
    end
 
-   def sort_by_id(games)
-      games.sort do |game1, game2|
-         game1.id <=> game2.id
-      end
-   end
-
    def populate_game_ids(json_games)
       games = []
       json_games.each do |game_json|
-         game = Game.new
+         game = ReachGame.new
          game.id = game_json["GameId"]
          games << game
       end
+
+      games.sort! do |game1, game2|
+         game1.id <=> game2.id
+      end
+
       games
    end
 
@@ -143,55 +146,5 @@ class ReachClient
       else
          raise ArgumentError.new('Invalid timestamp') 
       end
-   end
-
-   class Game
-      attr_accessor :id
-      attr_accessor :base_map
-      attr_accessor :duration
-      attr_accessor :timestamp
-      attr_accessor :variant_class
-      attr_accessor :map
-      attr_accessor :player_count
-      attr_accessor :players
-      attr_accessor :teams
-   end
-
-   class Player
-      attr_accessor :assists
-      attr_accessor :average_death_distance
-      attr_accessor :average_kill_distance
-      attr_accessor :betrayals
-      attr_accessor :did_not_finish
-      attr_accessor :deaths
-      attr_accessor :head_shots
-      attr_accessor :overall_standing
-      attr_accessor :kills
-      attr_accessor :multi_kill_medals
-      attr_accessor :other_medals
-      attr_accessor :service_tag
-      attr_accessor :emblem
-      attr_accessor :total_medals
-      attr_accessor :weapon_carnage
-      attr_accessor :team_id
-   end
-
-   class WeaponCarnageReport
-      attr_accessor :weapon_id
-      attr_accessor :deaths
-      attr_accessor :head_shots
-      attr_accessor :kills
-      attr_accessor :penalties
-   end
-
-   class Team 
-      attr_accessor :id
-      attr_accessor :standing
-      attr_accessor :score
-      attr_accessor :kills
-      attr_accessor :assists
-      attr_accessor :betrayals
-      attr_accessor :suicides
-      attr_accessor :medals
    end
 end

@@ -21,11 +21,12 @@ end
 
 desc "Run batch job"
 task :run_batch_job do
-   environemnt(:prod)
+   environment(:prod)
    sh "ruby -Iapp app/batch_job.rb"
 end
 
 desc "Run update job"
 task :run_update_job do
+   environment(:prod)
    sh "ruby -Iapp app/update_job.rb"
 end

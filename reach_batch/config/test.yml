@@ -1,3 +1,2 @@
 adapter: sqlite3
-# database: ":memory:"
 database: db/test.db
