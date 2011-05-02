@@ -2,6 +2,7 @@ require "test/unit"
 
 require "player_statistic"
 require "random_game_id"
+require "test_connection_info"
 require "game_filter"
 
 class GameFilterTest < Test::Unit::TestCase
