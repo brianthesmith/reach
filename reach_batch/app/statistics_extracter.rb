@@ -1,3 +1,4 @@
+require "reach_logging"
 require "player_statistic"
 
 class StatisticsExtracter
@@ -45,14 +46,17 @@ class StatisticsExtracter
 
    private
    def is_known_player?(questionable_service_tag)
-      is_good = false
+      LOG.debug "   checking service tag: #{questionable_service_tag}"
+
+      is_valid = false
       @known_service_tags.each do |good_service_tag|
          if questionable_service_tag == good_service_tag
-            is_good = true
+            is_valid = true
             break
          end
       end
+      LOG.debug "   valid: #{is_valid}"
 
-      is_good
+      is_valid
    end
 end

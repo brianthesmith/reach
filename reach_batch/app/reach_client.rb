@@ -3,6 +3,7 @@ require "json"
 require "halo-reach-api"
 require "active_record"
 
+require "reach_logging"
 require "reach_game"
 require "reach_player"
 require "reach_team"
@@ -13,7 +14,7 @@ class ReachClient
    ACCOUNT_2 = "jaymz9mm"
    CUSTOM_GAME = 6
 
-   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new.api_key), throttle = 1)
+   def initialize(reach = Halo::Reach::API.new(ApiKeyProvider.new.api_key), throttle = 0.5)
       @reach = reach
       @throttle = throttle
    end
@@ -33,9 +34,12 @@ class ReachClient
    end
 
    def populate_details(games)
+      total_games = games.length
+      current_game = 0
       games.each do |game|
          sleep(@throttle)
-
+         current_game += 1
+         LOG.info " - processing #{current_game} out of #{total_games}"
          game_details_json = @reach.get_game_details(game.id)["GameDetails"]
 
          game.base_map = game_details_json["BaseMapName"]

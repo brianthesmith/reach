@@ -2,7 +2,7 @@
 Prerequisites
 *******************************************************************************
 
-$ gem install json mocha halo-reach-api sqlite3
+$ gem install json mocha halo-reach-api sqlite3 mysql2
 
 *******************************************************************************
 

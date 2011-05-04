@@ -4,7 +4,6 @@ class ServiceTagProvider
       Player.all.each do |player|
          service_tags << player.service_tag
       end
-
       service_tags
    end
 end

@@ -3,6 +3,8 @@ require "rake/testtask"
 require "active_record"
 require "yaml"
 
+require "./app/reach_logging"
+
 desc "Default: run unit tests"
 task :default => :test
 
@@ -14,6 +16,8 @@ end
 desc "Run unit tests"
 Rake::TestTask.new(:test) do |t|
    environment(:test)
+   LOG.level = Logger::WARN   
+
    t.libs << "app" << "test"
    t.pattern = "test/**/*_test.rb"
    t.verbose = true
@@ -30,3 +34,4 @@ task :run_update_job do
    environment(:prod)
    sh "ruby -Iapp app/update_job.rb"
 end
+
