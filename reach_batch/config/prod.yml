@@ -1,0 +1,6 @@
+# adapter: mysql
+# database: reach
+# user: root
+# password: root
+adapter: sqlite3
+database: db/prod.db
