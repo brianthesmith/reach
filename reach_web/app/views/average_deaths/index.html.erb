@@ -1,0 +1,14 @@
+<h1>Average Deaths</h1>
+
+<table border="1">
+<tr>
+   <th>Service Tag</th>
+   <th>Deaths</th>
+</tr>
+<% @average_deaths.each do |average_death| %>
+<tr>
+   <td><%= average_death.service_tag %></td>
+   <td><%= average_death.deaths %></td>
+</tr>
+<% end %>
+</table>
