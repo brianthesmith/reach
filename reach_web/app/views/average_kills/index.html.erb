@@ -1,16 +1,1 @@
-<h1><%= @title %></h1>
-
-<table border="1">
-<tr>
-   <th>Service Tag</th>
-   <th><%= @stat_type %></th>
-</tr>
-<% @player_stats.each do |player_stat| %>
-<tr>
-   <td><%= player_stat.service_tag %></td>
-   <td><%= player_stat.value %></td>
-</tr>
-<% end %>
-</table>
-
-<%= link_to "Home", "home#index" %>
+<%= render :file => "shared/player_stat.html" %>
