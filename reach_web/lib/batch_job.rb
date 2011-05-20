@@ -1,4 +1,3 @@
-require "reach_logging"
 require "reach_client"
 require "game_filter"
 require "statistics_extracter"

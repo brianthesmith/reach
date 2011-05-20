@@ -3,7 +3,6 @@ require "json"
 require "halo-reach-api"
 require "active_record"
 
-require "reach_logging"
 require "reach_game"
 require "reach_player"
 require "reach_team"

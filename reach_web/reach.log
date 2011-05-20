@@ -1,0 +1,37 @@
+# Logfile created on 2011-05-20 08:55:01 -0500 by logger.rb/25413
+I, [2011-05-20T08:55:02.472647 #3597]  INFO -- : removing all players
+I, [2011-05-20T08:55:02.473108 #3597]  INFO -- : loading all players
+I, [2011-05-20T08:55:02.473347 #3597]  INFO -- : number of players: 2
+I, [2011-05-20T08:55:02.741285 #3597]  INFO -- : removing all weapons
+I, [2011-05-20T08:55:02.742253 #3597]  INFO -- : loading all weapons
+I, [2011-05-20T08:55:03.055163 #3597]  INFO -- :  - processing 1 out of 1
+D, [2011-05-20T08:55:03.061823 #3597] DEBUG -- :    checking service tag: tag_1
+D, [2011-05-20T08:55:03.061934 #3597] DEBUG -- :    valid: true
+D, [2011-05-20T08:55:03.062664 #3597] DEBUG -- :    checking service tag: tag_2
+D, [2011-05-20T08:55:03.062715 #3597] DEBUG -- :    valid: true
+D, [2011-05-20T08:55:03.063289 #3597] DEBUG -- :    checking service tag: tag_3
+D, [2011-05-20T08:55:03.063339 #3597] DEBUG -- :    valid: false
+I, [2011-05-20T08:55:27.276632 #3621]  INFO -- : removing all players
+I, [2011-05-20T08:55:27.276985 #3621]  INFO -- : loading all players
+I, [2011-05-20T08:55:27.277207 #3621]  INFO -- : number of players: 2
+I, [2011-05-20T08:55:27.570145 #3621]  INFO -- : removing all weapons
+I, [2011-05-20T08:55:27.571213 #3621]  INFO -- : loading all weapons
+I, [2011-05-20T08:55:27.895199 #3621]  INFO -- :  - processing 1 out of 1
+D, [2011-05-20T08:55:27.901821 #3621] DEBUG -- :    checking service tag: tag_1
+D, [2011-05-20T08:55:27.901931 #3621] DEBUG -- :    valid: true
+D, [2011-05-20T08:55:27.902654 #3621] DEBUG -- :    checking service tag: tag_2
+D, [2011-05-20T08:55:27.902705 #3621] DEBUG -- :    valid: true
+D, [2011-05-20T08:55:27.903280 #3621] DEBUG -- :    checking service tag: tag_3
+D, [2011-05-20T08:55:27.903329 #3621] DEBUG -- :    valid: false
+I, [2011-05-20T08:56:09.510581 #3644]  INFO -- : removing all players
+I, [2011-05-20T08:56:09.511160 #3644]  INFO -- : loading all players
+I, [2011-05-20T08:56:09.511533 #3644]  INFO -- : number of players: 2
+I, [2011-05-20T08:56:09.794744 #3644]  INFO -- : removing all weapons
+I, [2011-05-20T08:56:09.795854 #3644]  INFO -- : loading all weapons
+I, [2011-05-20T08:56:10.149457 #3644]  INFO -- :  - processing 1 out of 1
+D, [2011-05-20T08:56:10.425176 #3644] DEBUG -- :    checking service tag: tag_1
+D, [2011-05-20T08:56:10.425404 #3644] DEBUG -- :    valid: true
+D, [2011-05-20T08:56:10.427315 #3644] DEBUG -- :    checking service tag: tag_2
+D, [2011-05-20T08:56:10.427461 #3644] DEBUG -- :    valid: true
+D, [2011-05-20T08:56:10.428887 #3644] DEBUG -- :    checking service tag: tag_3
+D, [2011-05-20T08:56:10.428941 #3644] DEBUG -- :    valid: false
