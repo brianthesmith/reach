@@ -1,4 +1,3 @@
-require "reach_logging"
 require "player_statistic"
 
 class StatisticsExtracter

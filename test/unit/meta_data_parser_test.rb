@@ -1,9 +1,7 @@
-require "test/unit"
 require "json"
 require "mocha"
 
 require "meta_data_parser"
-require "test_connection_info"
 
 class MetaDataParserTest < Test::Unit::TestCase
    def setup

@@ -1,7 +1,5 @@
 require "test/unit"
 
-require "random_string"
-require "player"
 require "service_tag_provider"
 
 class ServiceTagProviderTest < Test::Unit::TestCase

@@ -2,6 +2,13 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+require "test/unit"
+require "json"
+require "mocha"
+
+require "./test/unit/test_connection_info"
+require "./test/unit/random_string"
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #

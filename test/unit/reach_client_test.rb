@@ -2,8 +2,6 @@ require "test/unit"
 require "json"
 require "mocha"
 
-require "random_string"
-
 require "reach_client"
 
 class ReachClientTest < Test::Unit::TestCase
