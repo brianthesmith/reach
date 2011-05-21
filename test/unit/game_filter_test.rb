@@ -1,8 +1,6 @@
-require "test/unit"
+require "test_helper"
 
 require "game_filter"
-require "test_connection_info"
-require "random_string"
 
 class GameFilterTest < Test::Unit::TestCase
    def setup
