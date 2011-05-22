@@ -4,5 +4,5 @@ task :run_batch_job do
    config = YAML::load(File.open("config/database.yml"))
    ActiveRecord::Base.establish_connection(config["production"])   
    ActiveRecord::Migrator.migrate("db/migrate")
-   sh "ruby -Ilib lib/batch_job.rb"
+   sh "ruby -Ilib lib/run_batch_job.rb"
 end

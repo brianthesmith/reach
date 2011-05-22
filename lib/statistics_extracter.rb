@@ -1,7 +1,7 @@
 require "player_statistic"
 
 class StatisticsExtracter
-   def initialize(known_service_tags)
+   def initialize(known_service_tags = ServiceTagProvider.new.all_service_tags)
       @known_service_tags = known_service_tags
    end
 
