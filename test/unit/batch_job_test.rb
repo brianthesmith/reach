@@ -13,6 +13,12 @@ class BatchJobTest < Test::Unit::TestCase
    end
 
    def test_execute
+      # @meta_data_parser.expects(:all_weapons)
+      # @meta_data_parser.expects(:all_players)
+
+      # games = []
+      # @reach_client.exepects(:all_historic_games).returns(games)
+
       # @test_object.execute
    end
 end
