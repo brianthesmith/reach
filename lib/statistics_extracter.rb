@@ -40,7 +40,9 @@ class StatisticsExtracter
          end
       end
 
-      player_stats
+      player_stats.each do |player_stat|
+         player_stat.save
+      end
    end
 
    private
