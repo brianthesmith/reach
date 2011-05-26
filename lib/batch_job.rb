@@ -7,9 +7,10 @@ require "meta_data_parser"
 require "service_tag_provider"
 
 class BatchJob
-   def initialize(meta_data_parser = MetaDataParser.new, reach_client = ReachClient.new, game_filter = GameFilter.new, game_processor = GameProcessor.new)
+   def initialize(meta_data_parser = MetaDataParser.new, reach_client = ReachClient.new, reach_json_parser = ReachJsonParser.new, game_filter = GameFilter.new, game_processor = GameProcessor.new)
       @meta_data_parser = meta_data_parser
       @reach_client = reach_client
+      @reach_json_parser = reach_json_parser
       @game_filter = game_filter
       @game_processor = game_processor
    end
@@ -40,12 +41,11 @@ class BatchJob
    end
 
    def fetch_game_data
-      all_games = @reach_client.all_historic_games
+      @reach_client.all_historic_games
 
-      LOG.info " - retrieved #{all_games.length} game(s)"
-      filtered_games = @game_filter.filter_games(all_games)
-      LOG.info " - filtered games: #{filtered_games.length} game(s) remaining to be imported"
+      filtered_games = @game_filter.filter_games
+      LOG.info " - #{filtered_games.length} game(s) to be imported into the database"
 
-      game_details = @reach_client.populate_details(filtered_games)
+      @reach_json_parser.populate_details(filtered_games)
    end
 end
