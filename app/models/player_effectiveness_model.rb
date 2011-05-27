@@ -4,7 +4,7 @@ class PlayerEffectivenessModel
                               map,
                               avg((1.0 * team_score) / ((1.0 * team_size) / (1.0 * other_team_size))) as effectiveness
                FROM           player_effectivenesses 
-               WHERE          map = 'Breakpoint'
+               WHERE          map = 'Forge World'
                GROUP BY       service_tag
                ORDER By       effectiveness DESC
             "

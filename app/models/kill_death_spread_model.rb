@@ -6,6 +6,7 @@ class KillDeathSpreadModel
                            avg(spread) as spread
                FROM        kill_death_spreads
                GROUP BY    service_tag
+               ORDER BY    spread DESC
             "
 
       kill_death_spread_stats = []

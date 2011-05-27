@@ -19,9 +19,8 @@ class ReachJsonParserTest < Test::Unit::TestCase
 
       populated_games = @test_object.populate_details(games)
 
-      assert_equal 3, games.size
-      assert_equal "123", games[0].id
-      assert_equal "456", games[1].id
-      assert_equal "789", games[2].id
+      assert_equal 1, populated_games.size
+      assert_equal "789", populated_games[0].id
+      assert_equal 2, populated_games[0].teams.size
    end
 end
