@@ -1,10 +1,10 @@
 class KillDeathSpreadModel
    def self.average_stats
       sql = "  select      service_tag, 
-                           avg(kills) as kilss, 
+                           avg(kills) as kills, 
                            avg(deaths) as deaths,
                            avg(spread) as spread
-               FROM        KillDeathSpreads
+               FROM        kill_death_spreads
                GROUP BY    service_tag
             "
 
