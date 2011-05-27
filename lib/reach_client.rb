@@ -40,20 +40,27 @@ class ReachClient
       total_games = ids.length
       current_game = 0
       ids.each do |id|
-         sleep(@throttle)
          current_game += 1
-         LOG.info " - downloading #{current_game} out of #{total_games}"
-         game_details = @reach.get_game_details(id)
-         game_details_json = game_details.parsed_response
 
-         write_out_details(id, game_details_json)
+         filename = "#{@output_directory}/#{id}.json"
+         if File.exists? filename
+            LOG.info " - already have game: #{current_game} out of #{total_games}"
+         else
+            sleep(@throttle)
+            LOG.info " - downloading: #{current_game} out of #{total_games}"
+
+            game_details = @reach.get_game_details(id)
+            game_details_json = game_details.parsed_response
+
+            write_out_details(id, game_details_json, filename)
+         end         
       end
    end
 
-   def write_out_details(id, game_details_json)
+   def write_out_details(id, game_details_json, filename)
       json_text = JSON.generate(game_details_json)
 
-      output_file = File.new("#{@output_directory}/#{id}.json", "w+")
+      output_file = File.new(filename, "w+")
       output_file.write(json_text)
       output_file.close
    end
