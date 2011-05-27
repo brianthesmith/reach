@@ -43,7 +43,8 @@ class ReachClient
          sleep(@throttle)
          current_game += 1
          LOG.info " - downloading #{current_game} out of #{total_games}"
-         game_details_json = @reach.get_game_details(id)
+         game_details = @reach.get_game_details(id)
+         game_details_json = game_details.parsed_response
 
          write_out_details(id, game_details_json)
       end

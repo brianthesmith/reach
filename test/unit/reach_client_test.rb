@@ -20,7 +20,9 @@ class ReachClientTest < Test::Unit::TestCase
       @reach_mock.stubs(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, 0).returns(response2)
 
       game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
-      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(game_details)
+      details_response = mock
+      details_response.stubs(:parsed_response).returns(game_details)
+      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(details_response)
 
       @test_object.most_recent_games
 
@@ -41,7 +43,9 @@ class ReachClientTest < Test::Unit::TestCase
       @reach_mock.expects(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, 24).returns(response2)
 
       game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
-      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(game_details)
+      details_response = mock
+      details_response.stubs(:parsed_response).returns(game_details)
+      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(details_response)
 
       @test_object.all_historic_games
 
@@ -61,7 +65,9 @@ class ReachClientTest < Test::Unit::TestCase
       end
 
       game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
-      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(game_details)
+      details_response = mock
+      details_response.stubs(:parsed_response).returns(game_details)
+      @reach_mock.stubs(:get_game_details).with(any_parameters).returns(details_response)
 
       @test_object.all_historic_games
    end
@@ -75,16 +81,19 @@ class ReachClientTest < Test::Unit::TestCase
       response2 = JSON.parse '{"RecentGames": [{"GameId": "' + game_id2 + '"}]}'
       @reach_mock.stubs(:get_game_history).with(ReachClient::ACCOUNT_2, ReachClient::CUSTOM_GAME, 0).returns(response2)
 
-      details = JSON.parse(File.read("test_resources/game_details.txt"))
-      @reach_mock.stubs(:get_game_details).with(game_id1).returns(details)
-      @reach_mock.stubs(:get_game_details).with(game_id2).returns(details)
+      game_details = JSON.parse(File.new("test_resources/game_details.txt").read)
+      details_response = mock
+      details_response.stubs(:parsed_response).returns(game_details)
+
+      @reach_mock.stubs(:get_game_details).with(game_id1).returns(details_response)
+      @reach_mock.stubs(:get_game_details).with(game_id2).returns(details_response)
 
       @test_object.most_recent_games
       
       contents1 = File.read("#{@test_data_directory}/#{game_id1}.json")
       contents2 = File.read("#{@test_data_directory}/#{game_id2}.json")
 
-      assert details == JSON.parse(contents1)
-      assert details == JSON.parse(contents2)
+      assert game_details == JSON.parse(contents1)
+      assert game_details == JSON.parse(contents2)
    end
 end
