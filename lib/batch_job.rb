@@ -1,5 +1,7 @@
 require "reach_client"
 require "game_filter"
+require "game_processor"
+require "reach_json_parser"
 require "statistics_extracter"
 require "api_key_provider"
 require "active_record"
