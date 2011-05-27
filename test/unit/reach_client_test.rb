@@ -1,9 +1,3 @@
-require "test/unit"
-require "json"
-require "mocha"
-
-require "reach_client"
-
 class ReachClientTest < Test::Unit::TestCase
    def setup
       @test_data_directory = "test_resources/reach_client_data"

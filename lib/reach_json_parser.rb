@@ -1,13 +1,3 @@
-require "rubygems"
-require "json"
-require "halo-reach-api"
-require "active_record"
-
-require "reach_game"
-require "reach_player"
-require "reach_team"
-require "reach_weapon_carnage_report"
-
 class ReachJsonParser
    def initialize(data_directory = "reach_data")
       @data_directory = data_directory
@@ -17,11 +7,10 @@ class ReachJsonParser
       total_games = games.length
       current_game = 0
       games.each do |game|
-         sleep(@throttle)
          current_game += 1
          LOG.info " - processing #{current_game} out of #{total_games}"
 
-         details = JSON.parse(File.read("#{data_directory}/#{game.id}.json"))
+         details = JSON.parse(File.read("#{@data_directory}/#{game.id}.json"))
 
          game_details_json = details["GameDetails"]
 
