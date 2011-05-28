@@ -2,7 +2,7 @@ require "kill_death_spread_processor"
 
 class KillDeathSpreadProcessorTest < Test::Unit::TestCase
    def setup
-      @test_object = KillDeathSpreadProcessor.new
+      @test_object = KillDeathSpreadProcessor.new(["player1", "player2"])
 
       KillDeathSpread.delete_all
    end

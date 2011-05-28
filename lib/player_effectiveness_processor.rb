@@ -1,15 +1,23 @@
-class PlayerEffectivenessProcessor
+require "base_processor"
+
+class PlayerEffectivenessProcessor < BaseProcessor
+   def initialize(known_service_tags = ServiceTagProvider.new.all_service_tags)
+      super known_service_tags
+   end
+
    def process_game(game)
       game.players.each do |player|
-         player_effectiveness = PlayerEffectiveness.new
-         player_effectiveness.service_tag = player.service_tag
-         player_effectiveness.map = game.base_map
-         player_effectiveness.team_score = team_score(game, player.team_id)
-         player_effectiveness.team_size = team_size(game, player.team_id)
-         player_effectiveness.other_team_score = other_team_score(game, player.team_id)
-         player_effectiveness.other_team_size = other_team_size(game, player.team_id)
+         if is_known_player? player.service_tag
+            player_effectiveness = PlayerEffectiveness.new
+            player_effectiveness.service_tag = player.service_tag
+            player_effectiveness.map = game.map
+            player_effectiveness.team_score = team_score(game, player.team_id)
+            player_effectiveness.team_size = team_size(game, player.team_id)
+            player_effectiveness.other_team_score = other_team_score(game, player.team_id)
+            player_effectiveness.other_team_size = other_team_size(game, player.team_id)
 
-         player_effectiveness.save
+            player_effectiveness.save
+         end
       end
    end
 

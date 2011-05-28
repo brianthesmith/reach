@@ -4,7 +4,7 @@ require "player_effectiveness_processor"
 
 class PlayerEffectivenessProcessorTest < Test::Unit::TestCase
    def setup
-      @test_object = PlayerEffectivenessProcessor.new
+      @test_object = PlayerEffectivenessProcessor.new(["player1", "player2", "player3"])
 
       PlayerEffectiveness.delete_all
    end
@@ -30,7 +30,7 @@ class PlayerEffectivenessProcessorTest < Test::Unit::TestCase
       map_name = random_string
 
       game = ReachGame.new
-      game.base_map = map_name
+      game.map = map_name
       game.teams = [team1, team2]
       game.players = [player1, player2, player3]
 
