@@ -9,21 +9,23 @@ class GameProcessorTest < Test::Unit::TestCase
    end
 
    def test_each_processor_is_called_with_the_given_game
-      id = random_string
+      reach_id = random_string
 
       game = ReachGame.new
-      game.id = id
-      @test_object.process_game(game)
+      game.reach_id = reach_id
+      game.save
 
-      assert_equal id, @processor1.given_id
-      assert_equal id, @processor2.given_id
+      @test_object.process_game(reach_id)
+
+      assert_equal reach_id, @processor1.given_id
+      assert_equal reach_id, @processor2.given_id
    end
 end
 
 class StubProcessor
    attr_accessor :given_id
 
-   def process_game(game)
-      @given_id = game.id
+   def process_game(game_id)
+      @given_id = game_id
    end
 end

@@ -1,37 +1,38 @@
+require "reach_logging"
+
 class ReachJsonParser
    def initialize(data_directory = "reach_data")
       @data_directory = data_directory
    end
 
-   def populate_details(games)
-      total_games = games.length
+   def populate_details(game_ids)
+      total_games = game_ids.length
       current_game = 0
 
-      ignored_games = []
+      ignored_game_ids = []
 
-      games.each do |game|
+      game_ids.each do |game_id|
          current_game += 1
          LOG.info " - reading in game #{current_game} out of #{total_games}"
 
-         details = JSON.parse(File.read("#{@data_directory}/#{game.id}.json"))
+         file_contents = JSON.parse(File.read("#{@data_directory}/#{game_id}.json"))
+         game_details_json = file_contents["GameDetails"]
 
-         game_details_json = details["GameDetails"]
-
-         if (game_details_json["Teams"] == nil)
-            ignored_games << game
-         else
+         if (game_details_json["Teams"] != nil)
+            game = ReachGame.new
+            game.reach_id(game_id)
             game.base_map = game_details_json["BaseMapName"]
             game.duration = game_details_json["GameDuration"]
             game.timestamp = parse_timestamp(game_details_json["GameTimestamp"])
             game.variant_class = game_details_json["GameVariantClass"]
-            game.map = game_details_json["MapName"]
+            game.map = ReachMap.find_by_name(game_details_json["MapName"])
             game.player_count = game_details_json["PlayerCount"]
             game.players = parse_players(game_details_json["Players"])
             game.teams = parse_teams(game_details_json["Teams"])
+
+            game.save
          end
       end
-
-      games - ignored_games
    end
 
    private
@@ -39,7 +40,7 @@ class ReachJsonParser
       players = []
 
       json_players.each do |json_player|
-         player = ReachPlayer.new
+         player = ReachPlayerStat.new
          players << player
 
          player.assists = json_player["Assists"]

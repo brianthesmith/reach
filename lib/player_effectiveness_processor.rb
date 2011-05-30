@@ -1,20 +1,14 @@
-require "base_processor"
-
-class PlayerEffectivenessProcessor < BaseProcessor
-   def initialize(known_service_tags = ServiceTagProvider.new.all_service_tags)
-      super known_service_tags
-   end
-
+class PlayerEffectivenessProcessor
    def process_game(game)
-      game.players.each do |player|
-         if is_known_player? player.service_tag
+      game.reach_teams.each do |team|
+         team.reach_player_stats.each do |player_stat|
             player_effectiveness = PlayerEffectiveness.new
-            player_effectiveness.service_tag = player.service_tag
+            player_effectiveness.player = player_stat.player
             player_effectiveness.map = game.map
-            player_effectiveness.team_score = team_score(game, player.team_id)
-            player_effectiveness.team_size = team_size(game, player.team_id)
-            player_effectiveness.other_team_score = other_team_score(game, player.team_id)
-            player_effectiveness.other_team_size = other_team_size(game, player.team_id)
+            player_effectiveness.team_score = team_score(game, team.team_id)
+            player_effectiveness.team_size = team_size(game, team.team_id)
+            player_effectiveness.other_team_score = other_team_score(game, team.team_id)
+            player_effectiveness.other_team_size = other_team_size(game, team.team_id)
 
             player_effectiveness.save
          end
@@ -25,8 +19,8 @@ class PlayerEffectivenessProcessor < BaseProcessor
    def team_score(game, team_id)
       score = 0
 
-      game.teams.each do |team|
-         if team.id == team_id
+      game.reach_teams.each do |team|
+         if team.team_id == team_id
             score = team.score
             break
          end
@@ -38,9 +32,10 @@ class PlayerEffectivenessProcessor < BaseProcessor
    def team_size(game, team_id)
       team_size = 0
 
-      game.players.each do |player|
-         if player.team_id == team_id
-            team_size += 1
+      game.reach_teams.each do |team|
+         if team.team_id == team_id
+            team_size = team.reach_player_stats.count
+            break
          end
       end
 
@@ -50,9 +45,9 @@ class PlayerEffectivenessProcessor < BaseProcessor
    def other_team_score(game, team_id)
       score = 0
 
-      game.teams.each do |team|
-         if team.id != team_id
-            score = team.score
+      game.reach_teams.each do |team|
+         if team.team_id != team_id
+            score += team.score
             break
          end
       end
@@ -63,9 +58,10 @@ class PlayerEffectivenessProcessor < BaseProcessor
    def other_team_size(game, team_id)
       team_size = 0
 
-      game.players.each do |player|
-         if player.team_id != team_id
-            team_size += 1
+      game.reach_teams.each do |team|
+         if team.team_id != team_id
+            team_size += team.reach_player_stats.count
+            break
          end
       end
 

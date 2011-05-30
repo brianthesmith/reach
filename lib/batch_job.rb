@@ -2,7 +2,6 @@ require "reach_client"
 require "game_filter"
 require "game_processor"
 require "reach_json_parser"
-require "statistics_extracter"
 require "api_key_provider"
 require "active_record"
 require "meta_data_parser"
@@ -21,10 +20,10 @@ class BatchJob
       populate_meta_data
 
       LOG.info "Running batch job..."
-      fetch_game_data.each do |game|
-         LOG.info " - processing game: #{game.id}"
+      fetch_game_data.each do |game_id|
+         LOG.info " - processing game: #{game_id}"
 
-         @game_processor.process_game(game)         
+         @game_processor.process_game(game_id)         
       end
       LOG.info "Running batch job: complete."
    end
@@ -45,9 +44,11 @@ class BatchJob
    def fetch_game_data
       @reach_client.all_historic_games
 
-      filtered_games = @game_filter.filter_games
-      LOG.info " - #{filtered_games.length} game(s) to be imported into the database"
+      filtered_game_ids = @game_filter.filter_game_ids
+      LOG.info " - #{filtered_game_ids.length} game(s) to be imported into the database"
 
-      @reach_json_parser.populate_details(filtered_games)
+      @reach_json_parser.populate_details(filtered_game_ids)
+
+      filtered_game_ids
    end
 end

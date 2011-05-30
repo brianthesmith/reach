@@ -1,12 +1,8 @@
 require "rubygems"
 require "json"
 require "halo-reach-api"
-require "active_record"
 
-require "reach_game"
-require "reach_player"
-require "reach_team"
-require "reach_weapon_carnage_report"
+require "reach_logging"
 
 class ReachClient
    ACCOUNT_1 ="Buckethead Died"

@@ -6,9 +6,9 @@ class GameProcessor
       @game_processors = game_processors
    end
 
-   def process_game(game)
+   def process_game(reach_game_id)
       @game_processors.each do |processor|
-         processor.process_game(game)
+         processor.process_game(reach_game_id)
       end
    end
 end

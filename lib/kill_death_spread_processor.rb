@@ -1,18 +1,14 @@
-require "base_processor"
+class KillDeathSpreadProcessor
+   def process_game(reach_game_id)
+      game = ReachGame.find_by_reach_id(reach_game_id)
 
-class KillDeathSpreadProcessor < BaseProcessor
-   def initialize(known_service_tags = ServiceTagProvider.new.all_service_tags)
-      super known_service_tags
-   end
-
-   def process_game(game)
-      game.players.each do |player|
-         if is_known_player? player.service_tag
+      game.reach_teams.each do |team|
+         team.reach_player_stats.each do |player_stat|
             kill_death_spread = KillDeathSpread.new
-            kill_death_spread.service_tag = player.service_tag         
-            kill_death_spread.kills = player.kills
-            kill_death_spread.deaths = player.deaths
-            kill_death_spread.spread = player.kills - player.deaths
+            kill_death_spread.player = player_stat.player
+            kill_death_spread.kills = player_stat.kills
+            kill_death_spread.deaths = player_stat.deaths
+            kill_death_spread.spread = player_stat.kills - player_stat.deaths
 
             kill_death_spread.save
          end

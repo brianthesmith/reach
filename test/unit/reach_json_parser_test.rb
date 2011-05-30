@@ -5,22 +5,23 @@ class ReachJsonParserTest < Test::Unit::TestCase
       @test_data_directory = "test_resources/reach_json_parser_data"
 
       @test_object = ReachJsonParser.new(@test_data_directory)
+
+      ReachTeam.delete_all
+      ReachPlayer.delete_all
+      ReachGame.delete_all
    end
 
    def test_populate_details
-      game1 = ReachGame.new
-      game1.id = "123"
-      game2 = ReachGame.new
-      game2.id = "456"
-      game3 = ReachGame.new
-      game3.id = "789"
+      ids = ["123", "456", "789"]
 
-      games = [game1, game2, game3]
+      @test_object.populate_details(ids)
 
-      populated_games = @test_object.populate_details(games)
+      assert_equal 1, ReachGame.all.count
 
-      assert_equal 1, populated_games.size
-      assert_equal "789", populated_games[0].id
-      assert_equal 2, populated_games[0].teams.size
+      game = ReachGame.all.first
+      assert_equal "789", game.reach_id
+      assert_equal "Hemorrhage (Forge World)", game.map.name
+      assert_equal 2, game.teams.size
+
    end
 end

@@ -1,10 +1,8 @@
-require "test/unit"
-
-require "service_tag_provider"
+require "player"
 
 class ServiceTagProviderTest < Test::Unit::TestCase
    def setup
-      @test_object = ServiceTagProvider.new()
+      @test_object = ServiceTagProvider.new
 
       Player.delete_all
    end

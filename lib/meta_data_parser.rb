@@ -1,8 +1,4 @@
-require "yaml"
-
-require "./lib/weapon"
-require "./lib/player"
-require "./lib/reach_logging"
+require "reach_logging"
 
 class MetaDataParser
    def initialize(player_file_location = "resources/players.txt", meta_data_file_location = "resources/game_meta_data.txt")

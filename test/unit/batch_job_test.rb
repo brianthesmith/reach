@@ -21,26 +21,18 @@ class BatchJobTest < Test::Unit::TestCase
       @meta_data_parser.expects(:all_players)
 
       @reach_client.expects(:all_historic_games)
-      
-      game1 = ReachGame.new
-      game1.id = random_string
-      game2 = ReachGame.new
-      game2.id = random_string
 
-      games = [game1, game2]
-      @game_filter.expects(:filter_games).returns(games)
+      game_id1 = random_string
+      game_id2 = random_string
 
-      game_details1 = ReachGame.new
-      game_details1.id = random_string
-      game_details2 = ReachGame.new
-      game_details2.id = random_string
+      ids = [game_id1, game_id2]
 
-      game_details = [game_details1, game_details2]
+      @game_filter.expects(:filter_game_ids).returns(ids)
 
-      @reach_json_parser.expects(:populate_details).with(games).returns(game_details)
+      @reach_json_parser.expects(:populate_details).with(ids)
 
-      @game_processor.expects(:process_game).with(game_details1)
-      @game_processor.expects(:process_game).with(game_details2)
+      @game_processor.expects(:process_game).with(game_id1)
+      @game_processor.expects(:process_game).with(game_id2)
 
       @test_object.execute
    end

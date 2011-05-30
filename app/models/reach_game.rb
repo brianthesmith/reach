@@ -1,0 +1,8 @@
+class ReachGame < ActiveRecord::Base
+   has_one :map
+   has_many :reach_teams
+
+   def self.find_by_reach_id(id)
+      where(:reach_id  => id).first
+   end
+end

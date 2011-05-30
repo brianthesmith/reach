@@ -1,3 +1,5 @@
+require "player"
+
 class ServiceTagProvider
    def all_service_tags
       service_tags = []
