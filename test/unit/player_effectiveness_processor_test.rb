@@ -25,10 +25,12 @@ class PlayerEffectivenessProcessorTest < Test::Unit::TestCase
       game.save
 
       team1 = ReachTeam.new
+      team1.team_id = 1
       team1.score = 15
       game.reach_teams << team1
 
       team2 = ReachTeam.new
+      team2.team_id = 2
       team2.score = 10
       game.reach_teams << team2
 
