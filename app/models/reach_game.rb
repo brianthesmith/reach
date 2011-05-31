@@ -1,5 +1,5 @@
 class ReachGame < ActiveRecord::Base
-   has_one :map
+   belongs_to :reach_map
    has_many :reach_teams
 
    def self.find_by_reach_id(id)

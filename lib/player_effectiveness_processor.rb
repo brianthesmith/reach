@@ -4,7 +4,7 @@ class PlayerEffectivenessProcessor
          team.reach_player_stats.each do |player_stat|
             player_effectiveness = PlayerEffectiveness.new
             player_effectiveness.player = player_stat.player
-            player_effectiveness.map = game.map
+            player_effectiveness.reach_map = game.reach_map
             player_effectiveness.team_score = team_score(game, team.team_id)
             player_effectiveness.team_size = team_size(game, team.team_id)
             player_effectiveness.other_team_score = other_team_score(game, team.team_id)

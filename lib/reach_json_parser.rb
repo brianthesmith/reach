@@ -20,15 +20,18 @@ class ReachJsonParser
 
          if (game_details_json["Teams"] != nil)
             game = ReachGame.new
-            game.reach_id(game_id)
-            game.base_map = game_details_json["BaseMapName"]
+            game.reach_id = game_id
+            game.name = game_details_json["GameVariantName"]
             game.duration = game_details_json["GameDuration"]
             game.timestamp = parse_timestamp(game_details_json["GameTimestamp"])
-            game.variant_class = game_details_json["GameVariantClass"]
-            game.map = ReachMap.find_by_name(game_details_json["MapName"])
-            game.player_count = game_details_json["PlayerCount"]
-            game.players = parse_players(game_details_json["Players"])
-            game.teams = parse_teams(game_details_json["Teams"])
+            
+            map_name = game_details_json["MapName"]
+            map = ReachMap.find_by_name(map_name)
+            game.reach_map = map
+
+            reach_teams = parse_teams(game, game_details_json["Teams"])
+
+            parse_player_stats(reach_teams, game_details_json["Players"])
 
             game.save
          end
@@ -36,33 +39,33 @@ class ReachJsonParser
    end
 
    private
-   def parse_players(json_players)
-      players = []
-
+   def parse_player_stats(reach_teams, json_players)
       json_players.each do |json_player|
-         player = ReachPlayerStat.new
-         players << player
+         player_stat = ReachPlayerStat.new
 
-         player.assists = json_player["Assists"]
-         player.average_death_distance = json_player["AvgDeathDistanceMeters"]
-         player.average_kill_distance = json_player["AvgKillDistanceMeters"]
-         player.betrayals = json_player["Betrayals"]
-         player.did_not_finish = json_player["DNF"]
-         player.assists = json_player["Assists"]
-         player.deaths = json_player["Deaths"]
-         player.head_shots = json_player["Headshots"]
-         player.overall_standing = json_player["IndividualStandingWithNoRegardForTeams"]
-         player.kills = json_player["Kills"]
-         player.multi_kill_medals = json_player["MultiMedalCount"]
-         player.other_medals = json_player["OtherMedalCount"]
-         player.service_tag = json_player["PlayerDetail"]["service_tag"]
-         player.emblem = json_player["PlayerDetail"]["ReachEmblem"]
-         player.team_id = json_player["Team"]
-         player.total_medals = json_player["TotalMedalCount"]
-         player.weapon_carnage = parse_weapon_carnage(json_player["WeaponCarnageReport"])
+         service_tag = json_player["PlayerDetail"]["service_tag"]
+         player = Player.find_by_service_tag(service_tag)
+         player_stat.player = player
+
+         player_stat.assists = json_player["Assists"]
+         player_stat.average_death_distance = json_player["AvgDeathDistanceMeters"]
+         player_stat.average_kill_distance = json_player["AvgKillDistanceMeters"]
+         player_stat.betrayals = json_player["Betrayals"]
+         player_stat.did_not_finish = json_player["DNF"]
+         player_stat.assists = json_player["Assists"]
+         player_stat.deaths = json_player["Deaths"]
+         player_stat.head_shots = json_player["Headshots"]
+         player_stat.overall_standing = json_player["IndividualStandingWithNoRegardForTeams"]
+         player_stat.kills = json_player["Kills"]
+         player_stat.total_medals = json_player["TotalMedalCount"]
+
+         # player_stat.multi_kill_medals = json_player["MultiMedalCount"]
+         # player_stat.other_medals = json_player["OtherMedalCount"]
+         # player_stat.emblem = json_player["PlayerDetail"]["ReachEmblem"]
+         # player_stat.weapon_carnage = parse_weapon_carnage(json_player["WeaponCarnageReport"])
+
+         reach_teams[json_player["Team"]].reach_player_stats << player_stat
       end
-
-      players
    end
 
    def parse_weapon_carnage(weapon_carnage_jsons)
@@ -81,13 +84,14 @@ class ReachJsonParser
       weapon_carnages
    end
 
-   def parse_teams(json_teams)
-      teams = []
+   def parse_teams(game, json_teams)
+      teams = {}
       json_teams.each do |json_team|
          team = ReachTeam.new
-         teams << team
 
-         team.id = json_team["Index"]
+         team_id = json_team["Index"]
+
+         team.team_id = team_id
          team.standing = json_team["Standing"]
          team.score = json_team["Score"]
          team.kills = json_team["TeamTotalKills"]
@@ -95,6 +99,9 @@ class ReachJsonParser
          team.betrayals = json_team["TeamTotalBetrayals"]
          team.suicides = json_team["TeamTotalSuicides"]
          team.medals = json_team["TeamTotalMedals"]
+
+         game.reach_teams << team
+         teams[team_id] = team
       end
 
       teams
