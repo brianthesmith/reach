@@ -1,10 +1,14 @@
-desc "Fetch stats from service and populate database with results"
-task :run_batch_job => :environment do
-   ENV["RAILS_ENV"] ||= "production"
+require "batch_job"
 
-   config = YAML::load(File.open("config/database.yml"))
-   ActiveRecord::Base.establish_connection(config["production"])   
-   ActiveRecord::Migrator.migrate("db/migrate")
+namespace :reach do 
+   desc "Fetch stats from service and populate database with results"
+   task :run_batch_job => :environment do
+      ENV["RAILS_ENV"] ||= "production"
 
-   BatchJob.new.execute
+      config = YAML::load(File.open("config/database.yml"))
+      ActiveRecord::Base.establish_connection(config["production"])   
+      ActiveRecord::Migrator.migrate("db/migrate")
+
+      BatchJob.new.execute
+   end
 end

@@ -3,7 +3,7 @@ class GameFilter
       @data_directory = data_directory
    end
 
-   def filtered_game_ids
+   def filter_game_ids
       filtered_game_ids = []
       Dir.glob("#{@data_directory}/*") do |file|
          file_contents = File.read(file)

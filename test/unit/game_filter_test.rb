@@ -18,7 +18,7 @@ class GameFilterTest < Test::Unit::TestCase
       game2.reach_id = "3456789012"
       game2.save
 
-      filtered_game_ids = @test_object.filtered_game_ids
+      filtered_game_ids = @test_object.filter_game_ids
       
       assert_equal 2, filtered_game_ids.length
       assert_equal 2345678901, filtered_game_ids[0]

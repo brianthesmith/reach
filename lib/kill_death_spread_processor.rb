@@ -1,7 +1,5 @@
 class KillDeathSpreadProcessor
-   def process_game(reach_game_id)
-      game = ReachGame.find_by_reach_id(reach_game_id)
-
+   def process_game(game)
       game.reach_teams.each do |team|
          team.reach_player_stats.each do |player_stat|
             kill_death_spread = KillDeathSpread.new

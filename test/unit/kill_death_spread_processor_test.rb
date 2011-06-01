@@ -43,7 +43,7 @@ class KillDeathSpreadProcessorTest < Test::Unit::TestCase
       player2_stat.deaths = 4
       team2.reach_player_stats << player2_stat
 
-      @test_object.process_game(reach_id)
+      @test_object.process_game(game)
 
       assert_equal 2, KillDeathSpread.all.count
 

@@ -7,8 +7,11 @@ class GameProcessor
    end
 
    def process_game(reach_game_id)
-      @game_processors.each do |processor|
-         processor.process_game(reach_game_id)
+      game = ReachGame.find_by_reach_id(reach_game_id)
+      if game != nil
+         @game_processors.each do |processor|
+            processor.process_game(game)
+         end
       end
    end
 end

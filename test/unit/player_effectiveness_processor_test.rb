@@ -23,6 +23,7 @@ class PlayerEffectivenessProcessorTest < Test::Unit::TestCase
 
       game = ReachGame.new
       game.reach_map = map
+      game.reach_id = "123456789"
       game.save
 
       team1 = ReachTeam.new

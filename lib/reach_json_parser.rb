@@ -27,6 +27,11 @@ class ReachJsonParser
             
             map_name = game_details_json["MapName"]
             map = ReachMap.find_by_name(map_name)
+            if map == nil
+               map = ReachMap.new
+               map.name = map_name
+               map.save
+            end
             game.reach_map = map
 
             reach_teams = parse_teams(game, game_details_json["Teams"])

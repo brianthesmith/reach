@@ -51,21 +51,12 @@ class ReachJsonParserTest < Test::Unit::TestCase
       player7.real_name = "Player 7"
       player7.save
 
-      map1 = ReachMap.new
-      map1.name = random_string
-      map1.save
-
-      map2 = ReachMap.new
-      map2.name = "Hemorrhage (Forge World)"
-      map2.save
-
-      map3 = ReachMap.new
-      map3.name = random_string
-      map3.save
-
       ids = ["123", "456", "789"]
 
       @test_object.populate_details(ids)
+
+      assert_equal 1, ReachMap.all.count
+      assert_equal "Hemorrhage (Forge World)", ReachMap.all.first.name
 
       assert_equal 1, ReachGame.all.count
       saved_game = ReachGame.all.first
