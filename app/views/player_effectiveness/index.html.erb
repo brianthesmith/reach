@@ -2,13 +2,13 @@
 
 <table border="1">
 <tr>
-   <th>Service Tag</th>
+   <th>Player Name</th>
    <th>Map</th>
    <th>Effectiveness</th>
 </tr>
 <% @player_stats.each do |player_stat| %>
 <tr>
-   <td><%= player_stat.service_tag %></td>
+   <td><%= player_stat.player_name %></td>
    <td><%= player_stat.map %></td>
    <td><%= player_stat.effectiveness %></td>
 </tr>
