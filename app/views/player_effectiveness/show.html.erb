@@ -1,0 +1,18 @@
+<h1><%= @title %></h1>
+
+<table border="1">
+<tr>
+   <th>Player Name</th>
+   <th>Map</th>
+   <th>Effectiveness</th>
+</tr>
+<% @player_stats.each do |player_stat| %>
+<tr>
+   <td><%= player_stat.player_name %></td>
+   <td><%= player_stat.map %></td>
+   <td><%= player_stat.effectiveness %></td>
+</tr>
+<% end %>
+</table>
+
+<%= link_to "Back", "/player_effectiveness#index" %> <%= link_to "Home", "/home#index" %>
