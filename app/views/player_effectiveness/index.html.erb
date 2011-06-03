@@ -1,0 +1,14 @@
+<h1><%= @title %></h1>
+
+<table border="1">
+<tr>
+   <th>Map</th>
+</tr>
+<% @maps.each do |map| %>
+<tr>
+   <td><%= link_to map.name, "player_effectiveness/#{map.name}" %></td>
+</tr>
+<% end %>
+</table>
+
+<%= link_to "Home", "/home#index" %>

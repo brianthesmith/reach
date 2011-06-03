@@ -1,0 +1,22 @@
+<h1><%= @title %></h1>
+
+<table border="1">
+<tr>
+   <th>ID</th>
+   <th>Name</th>
+   <th>Map</th>
+   <th>Date</th>
+   <th>Duration</th>
+</tr>
+<% @games.each do |game| %>
+<tr>
+   <td><%= game.reach_id %></td>
+   <td><%= game.name %></td>
+   <td><%= game.reach_map.name %></td>
+   <td><%= game.timestamp %></td>
+   <td><%= game.duration %></td>
+</tr>
+<% end %>
+</table>
+
+<%= link_to "Home", "home#index" %>
